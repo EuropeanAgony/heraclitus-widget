@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,3 +29,15 @@ jobs:
         with:
           name: heraclitus-widget
           path: app/build/outputs/apk/release/*.apk
+
+      # Also keep the latest APK as a plain file on the "apk" branch
+      - name: Publish APK to the apk branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p /tmp/out
+          cp app/build/outputs/apk/release/*.apk /tmp/out/Heraclitus.apk
+          cd /tmp/out
+          git init -q -b apk
+          git add Heraclitus.apk
+          git -c user.name=github-actions -c user.email=github-actions@users.noreply.github.com commit -q -m "APK from build ${{ github.run_number }}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" apk

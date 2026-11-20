@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ink">#0B0A09</color>
+    <color name="ivory">#EBE3D4</color>
+    <color name="stone">#B3AB9D</color>
+    <color name="stone_dim">#6F685E</color>
+    <color name="brass">#9C8257</color>
+    <color name="brass_dim">#6E5C3F</color>
+</resources>
